@@ -1,0 +1,7 @@
+package: auvieux-scraper
+import:
+- package: github.com/PuerkitoBio/goquery
+  version: ^1.0.1
+- package: golang.org/x/net
+  subpackages:
+  - html
