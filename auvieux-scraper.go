@@ -5,6 +5,7 @@ import (
 	"os"
 	"regexp"
 	"strconv"
+	"strings"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -23,8 +24,8 @@ type product struct {
 
 func convertPrice(pstr string) (float64, error) {
 	// Remove trailing ' €'
-	re := regexp.MustCompile(`^(\d+),(\d+).*$`)
-	s := re.ReplaceAllString(pstr, "$1.$2")
+	re := regexp.MustCompile(`^(\d+)€(\d+)?.*$`)
+	s := re.ReplaceAllString(strings.TrimSpace(pstr), "$1.$2")
 	return strconv.ParseFloat(s, 32)
 }
 
@@ -35,8 +36,8 @@ func scrapeProduct(id string) (*product, error) {
 		return nil, err
 	}
 
-	name := doc.Find(".product-name > a").First().Text()
-	priceStr := doc.Find(".regular-price .price").First().Text()
+	name := doc.Find("span.product-list-name").First().Text()
+	priceStr := doc.Find("span.price-content-container > span.orangeColor").First().Text()
 
 	price, err := convertPrice(priceStr)
 	if err != nil {
