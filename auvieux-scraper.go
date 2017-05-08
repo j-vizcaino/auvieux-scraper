@@ -54,7 +54,7 @@ func main() {
 	products := os.Args[1:]
 
 	if len(products) == 0 {
-		fmt.Printf("Usage: auvieux-scraper product_id [product_id ...]")
+		fmt.Println("Usage: auvieux-scraper product_id [product_id ...]")
 		os.Exit(1)
 	}
 
